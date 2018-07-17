@@ -44,7 +44,7 @@ import thread
 
 # device_ip = '172.31.5.214'
 # device_ip = '192.168.43.201'
-device_ip = '192.168.0.101'
+device_ip = '192.168.43.2'
 
 MAX_CMD_LENGTH = 6
 ACK_LEN = 4
@@ -53,7 +53,7 @@ PACKET_LEN = 64
 START_CMD = "340034"
 SYS_OFF_CMD = "220022"
 PROC_OFF_CMD = "320032"
-LOG_FILE = "rsteps.txt" #check in powershell, > Get-Content -Path "C:/xampp/htdocs/iot_single/steps" -Wait
+LOG_FILE = "lsteps.txt" #check in powershell, > Get-Content -Path "C:/xampp/htdocs/iot_single/steps" -Wait
 TIME_OUT = 10
 NUM_RETRY = -1
 g_isRunning = True
@@ -263,7 +263,7 @@ class DeviceClient(threading.Thread):
         dx = self.prev_x - x
         dy = self.prev_y - y
         distance = math.sqrt(dx * dx + dy * dy)
-        if (distance > 0.05):
+        if (distance > 0.00):
             if self.outfile :
                 str = "%d, %0.2f, %0.2f, %0.2f, %0.2f\n" % (self.pkt_counter, -x, y, -z, phi)
                 self.outfile.write(str)
@@ -363,7 +363,7 @@ class DeviceClient(threading.Thread):
 
                         curr_pkt = packet_info[0] * 256 + packet_info[1]
 
-                        if curr_pkt != prev_pkt:
+                        if curr_pkt != prev_pkt or curr_pkt == prev_pkt:
                             # print "Read packet # %d...Sending Ack" % curr_pkt
                             dx, dy, dz, dp, disp = self.calc_disp(payload, phi)
                             xpos += dx
