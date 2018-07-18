@@ -62,7 +62,10 @@ void loop() {
         buf[i] = Serial.read();
       }
       client.write(buf, len); // system writes to oblu via rxtx(UART)
-      /*char num[4]; //unpacked data
+      char num[4]; //unpacked data
+      
+      // Tried to implement uploading data to to Firebase, to unpack the data from Oblu.
+      
       /*num[0]=buf[0];
       num[1]=buf[1];
       num[2]=buf[2];
